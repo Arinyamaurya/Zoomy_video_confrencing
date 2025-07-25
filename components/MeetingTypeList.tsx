@@ -43,7 +43,7 @@ const MeetingTypeList = () => {
       if (!call) throw new Error('Failed to create meeting');
       const startsAt =
         values.dateTime.toISOString() || new Date(Date.now()).toISOString();
-      const description = values.description || 'Instant Meeting';
+      const description = values.description || 'Personal Meeting';
       await call.getOrCreate({
         data: {
           starts_at: startsAt,
@@ -74,7 +74,7 @@ const MeetingTypeList = () => {
       <HomeCard
         img="/icons/add-meeting.svg"
         title="New Meeting"
-        description="Start an instant meeting"
+        description="Start a new meeting"
          className="bg-[#FF742E]"
         handleClick={() => setMeetingState('isInstantMeeting')}
       />
@@ -158,11 +158,11 @@ const MeetingTypeList = () => {
         buttonText="Join Meeting"
         handleClick={() => router.push(values.link)}
       >
-        {/* <Input
+       <Input
           placeholder="Meeting link"
           onChange={(e) => setValues({ ...values, link: e.target.value })}
           className="border-none bg-[#252A41] focus-visible:ring-0 focus-visible:ring-offset-0"
-        /> */}
+        /> 
       </MeetingModal>
 
       <MeetingModal

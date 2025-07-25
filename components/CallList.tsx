@@ -28,16 +28,18 @@ const CallList = ({ type }: { type: 'ended' | 'upcoming' | 'recordings' }) => {
   };
 
   const getNoCallsMessage = () => {
+
     switch (type) {
       case 'ended':
         return 'No Previous Calls';
       case 'upcoming':
         return 'No Upcoming Calls';
       case 'recordings':
-        return 'No Recordings';
+        return 'No Recordings for now!';
       default:
         return '';
     }
+
   };
 
   useEffect(() => {
@@ -68,7 +70,9 @@ const CallList = ({ type }: { type: 'ended' | 'upcoming' | 'recordings' }) => {
       {calls && calls.length > 0 ? (
         calls.map((meeting: Call | CallRecording) => (
           <MeetingCard
-            key={(meeting as Call).id}
+            key={type === 'recordings'
+              ? `${(meeting as CallRecording).url}-${(meeting as CallRecording).start_time}`
+              : (meeting as Call).id}
             icon={
               type === 'ended'
                 ? '/icons/previous.svg'
@@ -79,7 +83,7 @@ const CallList = ({ type }: { type: 'ended' | 'upcoming' | 'recordings' }) => {
             title={
               (meeting as Call).state?.custom?.description ||
               (meeting as CallRecording).filename?.substring(0, 20) ||
-              'No Description'
+              'personal meeting'
             }
             date={
               (meeting as Call).state?.startsAt?.toLocaleString() ||
