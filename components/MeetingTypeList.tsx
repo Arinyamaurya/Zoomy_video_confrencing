@@ -59,8 +59,8 @@ const MeetingTypeList = () => {
       toast({
         title: 'Meeting Created',
       });
-    } catch (error) {
-      console.error(error);
+    } catch{
+      console.log("error");
       toast({ title: 'Failed to create Meeting' });
     }
   };
@@ -156,10 +156,23 @@ const MeetingTypeList = () => {
         title="Type the link here"
         className="text-center"
         buttonText="Join Meeting"
-        handleClick={() => router.push(values.link)}
+        handleClick={() => {
+  if (!values.link || !values.link.trim()) {
+    alert("Please enter a valid meeting link.");
+    return;
+  }
+  
+  try {
+    const url = new URL(values.link);
+    router.push(url.pathname);
+  } catch{
+    alert("Invalid URL format.");
+  }
+}}
       >
        <Input
           placeholder="Meeting link"
+           value={values.link}
           onChange={(e) => setValues({ ...values, link: e.target.value })}
           className="border-none bg-[#252A41] focus-visible:ring-0 focus-visible:ring-offset-0"
         /> 
